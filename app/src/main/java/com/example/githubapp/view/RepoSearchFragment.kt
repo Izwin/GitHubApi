@@ -19,14 +19,11 @@ class RepoSearchFragment : Fragment(R.layout.fragment_repo_search) {
 
     val viewmodel by viewModels<MainViewModel>()
     private var page = 1
+    private lateinit var adapter: RepoAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /// Тут не использвал @Inject так как нужно было передать и clicklistener
-        val adapter = RepoAdapter(requireContext()){p:Item ->
-            viewmodel.addRepoToDownloads(p)
-        }
         rec_view.layoutManager = LinearLayoutManager(requireContext())
-        rec_view.adapter = adapter
         rec_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -52,7 +49,14 @@ class RepoSearchFragment : Fragment(R.layout.fragment_repo_search) {
         viewmodel.errors.observe(requireActivity()){
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
-        search_button.setOnClickListener { page = 1;viewmodel.getRepos(editText.text.toString(), page)}
+        search_button.setOnClickListener {
+            adapter = RepoAdapter(requireContext()){p:Item ->
+                viewmodel.addRepoToDownloads(p)
+            }
+            rec_view.adapter = adapter
+            page = 1
+            viewmodel.getRepos(editText.text.toString(), page)
+        }
 
     }
 }
