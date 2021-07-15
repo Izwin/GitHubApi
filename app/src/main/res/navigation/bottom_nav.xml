@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/repoSearchFragment">
+
+    <fragment
+        android:id="@+id/downloadsFragment"
+        android:name="com.example.githubapp.view.DownloadsFragment"
+        android:label="fragment_downloads"
+        tools:layout="@layout/fragment_downloads" />
+    <fragment
+        android:id="@+id/repoSearchFragment"
+        android:name="com.example.githubapp.view.RepoSearchFragment"
+        android:label="RepoSearchFragment" />
+</navigation>
